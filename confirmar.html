@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="style.css">
+    <title>Aviator | Confirmar agendamento</title>
+</head>
+<body>
+
+<div class="app">
+
+    <header class="topo">
+        <a class="voltar" href="resultados.html">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><path d="M15 18 9 12l6-6"/></svg>
+        </a>
+        <h1 class="titulo-topo">Confirmar agendamento</h1>
+        <span></span>
+    </header>
+
+    <main class="tela conteudo layout-duplo">
+
+      <div class="coluna-a">
+
+        <div class="foto">
+            <img src="imagens/king-air-b200.jpg" alt="Beechcraft Super King Air B200 branco estacionado no patio do aeroporto">
+        </div>
+
+        <div class="detalhe-topo">
+            <div>
+                <h2 class="detalhe-nome">KING AIR B200</h2>
+                <p class="detalhe-serie">Super King Air Series &middot; 8 Assentos</p>
+            </div>
+            <a class="avaliar" href="#">Avaliar</a>
+        </div>
+
+        <p class="legenda rotulo-secao">Detalhes</p>
+
+        <div class="trecho">
+            <div class="trecho-linha">
+                <span class="trecho-icone">
+                    <svg class="icone icone-cheio" viewBox="0 0 24 24"><path transform="rotate(45 12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                </span>
+                <span>
+                    <span class="trecho-label">Origem</span>
+                    <span class="trecho-valor">Teterboro (TEB), NJ</span>
+                </span>
+            </div>
+
+            <div class="trecho-linha">
+                <span class="trecho-icone">
+                    <svg class="icone icone-cheio" viewBox="0 0 24 24"><path transform="rotate(135 12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                </span>
+                <span>
+                    <span class="trecho-label">Destino</span>
+                    <span class="trecho-valor">East Hampton (HTO), NY</span>
+                </span>
+            </div>
+
+            <hr class="linha">
+
+            <div class="trecho-quando">
+                <span>
+                    <svg class="icone icone-p" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg>
+                    Maio 12, 2026
+                </span>
+                <span>
+                    <svg class="icone icone-p" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></svg>
+                    09:00 AM EDT
+                </span>
+            </div>
+        </div>
+
+      </div>
+
+      <div class="coluna-b painel-lateral">
+
+        <div class="custos">
+            <p class="legenda">Resumo de custos</p>
+
+            <div class="custo">
+                <span>Fretamento</span>
+                <span>R$29.900,90</span>
+            </div>
+            <div class="custo">
+                <span>Taxas</span>
+                <span>R$1.200,00</span>
+            </div>
+
+            <hr class="linha">
+
+            <div class="custo custo-total">
+                <span>VALOR TOTAL</span>
+                <span>R$31.100,90</span>
+            </div>
+        </div>
+
+        <label class="termos">
+            <input type="checkbox">
+            <span class="chave"></span>
+            <span class="termos-texto">
+                Eu concordo com termos e condições
+                <small>Contrato de Fretamento Executivo. Eu reconheço a política de cancelamento para voos de curta distância.</small>
+            </span>
+        </label>
+
+        <a class="btn btn-final" href="pagamento.html">Selecionar voo</a>
+
+      </div>
+
+    </main>
+
+    <nav class="barra so-desktop">
+        <span class="marca">Aviator</span>
+        <a href="index.html" class="ativo">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.2-4.2"/></svg>
+            <span>Pesquisa</span>
+        </a>
+        <a href="agendamentos.html">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg>
+            <span>Agenda</span>
+        </a>
+        <a href="#">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3.5 20.5l1.4-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+            <span>Suporte</span>
+        </a>
+        <a href="#">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+
+</body>
+</html>
