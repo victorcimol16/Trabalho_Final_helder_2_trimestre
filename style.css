@@ -1,0 +1,1143 @@
+/* Aviator - fretamento aereo
+   Feito para celular primeiro. As media queries no fim do arquivo
+   adaptam para telas maiores. */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img,
+svg {
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+    color: inherit;
+}
+
+/* cores e medidas que se repetem no projeto todo */
+:root {
+    --preto: #111214;
+    --texto: #3d3f43;
+    --cinza: #8a8d93;
+    --cinza-forte: #6b6e74;
+    --borda: #e7e8ea;
+    --borda-forte: #d8d9dd;
+    --claro: #f3f3f4;
+    --claro-2: #e9e9eb;
+
+    --raio: 12px;
+    --raio-g: 16px;
+    --sombra: 0 1px 2px rgba(16, 17, 20, .05), 0 10px 26px rgba(16, 17, 20, .06);
+
+    --fonte: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    font-family: var(--fonte);
+    color: var(--preto);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* o app ocupa a altura toda da tela do celular.
+   100dvh evita que a barra do navegador corte o rodape */
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    background: #fff;
+}
+
+/* só esta parte rola, o topo e a barra de baixo ficam parados */
+.tela {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.conteudo {
+    padding: 16px;
+}
+
+.espaco > * + * {
+    margin-top: 12px;
+}
+
+/* topo da pagina */
+.topo {
+    flex: none;
+    height: 58px;
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    padding: 0 6px;
+}
+
+.voltar {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+}
+
+.titulo-topo {
+    text-align: center;
+    font-size: clamp(12px, 3.6vw, 14px);
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+/* textos repetidos */
+.legenda {
+    font-size: 11px;
+    color: var(--cinza);
+}
+
+.mini {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cinza-forte);
+}
+
+.subtitulo {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.subtitulo + .espaco {
+    margin-top: 12px;
+}
+
+/* icones */
+.icone {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex: none;
+}
+
+.icone-g {
+    width: 22px;
+    height: 22px;
+}
+
+.icone-p {
+    width: 14px;
+    height: 14px;
+}
+
+/* o aviao e desenhado cheio, sem contorno */
+.icone-cheio {
+    fill: currentColor;
+    stroke: none;
+}
+
+/* botoes */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--preto);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #26282c;
+}
+
+.btn-normal {
+    text-transform: none;
+    letter-spacing: .02em;
+    font-size: 15px;
+}
+
+.btn-claro {
+    background: var(--claro);
+    color: var(--preto);
+    min-height: 38px;
+    font-size: 10px;
+    letter-spacing: .07em;
+    padding: 0 8px;
+}
+
+.btn-claro:hover {
+    background: var(--claro-2);
+}
+
+/* caixas brancas com sombra */
+.cartao {
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-g);
+    box-shadow: var(--sombra);
+}
+
+.cartao-fino {
+    padding: 10px;
+}
+
+.cartao-largo {
+    padding: 14px;
+}
+
+.etiqueta {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: var(--claro-2);
+    color: var(--texto);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.linha {
+    height: 1px;
+    background: var(--borda);
+    border: 0;
+}
+
+/* Fotos das aeronaves.
+   A div segura a proporcao e o arredondamento, a imagem preenche por
+   dentro. O cinza do fundo aparece enquanto a foto nao carregou. */
+.foto {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--raio);
+    overflow: hidden;
+    background: var(--claro-2);
+}
+
+/* cover corta o excesso em vez de espremer a foto */
+.foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* escurece o pe da imagem, como a vinheta de uma foto */
+.foto::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .03), rgba(0, 0, 0, .18));
+}
+
+.foto-mini {
+    width: 42px;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    flex: none;
+}
+
+/* Tela de pesquisa */
+.boas-vindas {
+    background: #f2f2f3;
+    border-radius: 0 0 22px 22px;
+    padding: 20px 16px 22px;
+}
+
+.ola {
+    font-size: 11px;
+    color: var(--cinza);
+}
+
+.nome-usuario {
+    font-size: clamp(16px, 4.6vw, 19px);
+    font-weight: 700;
+    margin: 2px 0 16px;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 14px;
+    background: #fff;
+    border: 1px solid var(--borda-forte);
+    border-radius: 8px;
+    color: var(--texto);
+}
+
+.campo + .campo {
+    margin-top: 10px;
+}
+
+/* 16px de proposito: abaixo disso o Safari do iPhone da zoom ao focar */
+.campo input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    font-size: 16px;
+}
+
+.campo input::placeholder {
+    color: var(--cinza);
+}
+
+.boas-vindas .btn {
+    margin-top: 14px;
+}
+
+.recente {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+}
+
+.recente-icone {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--claro);
+    border: 1px solid var(--borda);
+    display: grid;
+    place-items: center;
+    flex: none;
+}
+
+.recente-rota {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recente-data {
+    display: block;
+    font-size: 11px;
+    color: var(--cinza);
+    margin-top: 2px;
+}
+
+/* Tela de resultados */
+.resumo-busca {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px;
+    background: var(--claro);
+    border-radius: var(--raio);
+}
+
+.resumo-rota {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.resumo-info {
+    font-size: 11px;
+    color: var(--cinza);
+    margin-top: 2px;
+}
+
+.editar {
+    font-size: 12px;
+    color: var(--cinza-forte);
+}
+
+.lista-voos {
+    margin-top: 14px;
+}
+
+.voo-topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.voo-nome,
+.voo-preco {
+    font-size: clamp(15px, 4.2vw, 17px);
+    font-weight: 700;
+}
+
+.voo-serie {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--cinza);
+    margin: 1px 0 12px;
+}
+
+.infos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+}
+
+.info {
+    padding: 10px 4px;
+    text-align: center;
+}
+
+.info + .info {
+    border-left: 1px solid var(--borda);
+}
+
+.info svg {
+    margin: 0 auto 5px;
+    color: var(--texto);
+}
+
+.info-nome {
+    font-size: 10px;
+    color: var(--cinza);
+}
+
+.info-valor {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.voo .btn {
+    margin-top: 12px;
+}
+
+/* Tela de confirmacao */
+.detalhe-topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.detalhe-nome {
+    font-size: clamp(15px, 4.2vw, 17px);
+    font-weight: 700;
+}
+
+.detalhe-serie {
+    font-size: 11px;
+    color: var(--cinza);
+    margin-top: 2px;
+}
+
+.avaliar {
+    font-size: 11px;
+    color: var(--cinza-forte);
+}
+
+.rotulo-secao {
+    margin-top: 16px;
+}
+
+.trecho {
+    background: var(--claro);
+    border-radius: var(--raio);
+    padding: 14px;
+    margin-top: 8px;
+}
+
+.trecho-linha {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.trecho-linha + .trecho-linha {
+    margin-top: 14px;
+}
+
+.trecho-icone {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--borda);
+    display: grid;
+    place-items: center;
+    flex: none;
+}
+
+.trecho-label {
+    display: block;
+    font-size: 10px;
+    color: var(--cinza);
+}
+
+.trecho-valor {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 1px;
+}
+
+.trecho .linha {
+    margin: 14px 0;
+    background: var(--borda-forte);
+}
+
+.trecho-quando {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 26px;
+}
+
+.trecho-quando span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--texto);
+}
+
+.custos {
+    margin-top: 18px;
+}
+
+.custo {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 13px;
+    padding: 5px 0;
+}
+
+.custo-total {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.custos .linha {
+    margin: 8px 0;
+}
+
+/* interruptor do aceite, funciona com o checkbox escondido */
+.termos {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.termos input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.chave {
+    flex: none;
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--preto);
+    padding: 3px;
+    display: flex;
+}
+
+.chave::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform .15s;
+}
+
+.termos input:checked + .chave::before {
+    transform: translateX(18px);
+}
+
+.termos-texto {
+    font-size: 11px;
+    line-height: 1.45;
+    font-weight: 700;
+}
+
+.termos-texto small {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--texto);
+    margin-top: 2px;
+}
+
+.btn-final {
+    margin: 16px 0 8px;
+}
+
+/* Tela de agendamentos */
+.controle-aba {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.abas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--claro);
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+}
+
+.abas label {
+    min-height: 46px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cinza);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.abas label + label {
+    border-left: 1px solid var(--borda-forte);
+}
+
+/* o radio marcado pinta a aba dele e mostra o painel certo */
+#aba-proximos:checked ~ .abas label[for="aba-proximos"],
+#aba-historico:checked ~ .abas label[for="aba-historico"] {
+    color: var(--preto);
+    background: #fff;
+    border-bottom-color: var(--preto);
+}
+
+.painel {
+    display: none;
+}
+
+#aba-proximos:checked ~ .painel-proximos,
+#aba-historico:checked ~ .painel-historico {
+    display: block;
+}
+
+.agendamento-topo {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.agendamento-data {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--cinza-forte);
+}
+
+.agendamento-rota {
+    font-size: clamp(15px, 4.2vw, 17px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 3px;
+}
+
+.agendamento-aviao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.agendamento-modelo {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.agendamento-serie {
+    font-size: 10px;
+    color: var(--cinza);
+    margin-top: 1px;
+}
+
+.agendamento-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.vazio {
+    text-align: center;
+    color: var(--cinza);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 60px 24px;
+}
+
+/* Tela de pagamento */
+.reserva-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.reserva-rota {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(18px, 5.4vw, 22px);
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.reserva-data {
+    font-size: 11px;
+    color: var(--cinza);
+    margin-top: 3px;
+}
+
+.reserva .linha {
+    margin: 14px 0;
+}
+
+.reserva-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.reserva-valor {
+    font-size: clamp(18px, 5.4vw, 22px);
+    font-weight: 700;
+}
+
+.rotulo {
+    display: block;
+    font-size: 12px;
+    color: var(--texto);
+    margin-bottom: 6px;
+}
+
+.entrada {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 14px;
+    background: #fff;
+    border: 1px solid var(--borda-forte);
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.entrada::placeholder {
+    color: var(--cinza);
+}
+
+.entrada:focus {
+    border-color: var(--preto);
+}
+
+.linha-form + .linha-form {
+    margin-top: 14px;
+}
+
+.duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.duas-colunas .rotulo,
+.duas-colunas .entrada {
+    text-align: center;
+}
+
+.pagamentos {
+    margin-top: 18px;
+}
+
+.pagamento {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 62px;
+    padding: 0 16px;
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--raio);
+    cursor: pointer;
+}
+
+.pagamento + .pagamento {
+    margin-top: 12px;
+}
+
+.pagamento-icone {
+    width: 28px;
+    display: grid;
+    place-items: center;
+    flex: none;
+}
+
+.pagamento-btc {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.pagamento-nome {
+    flex: 1;
+    font-size: 13px;
+}
+
+/* bolinha de selecao desenhada no lugar do radio padrao */
+.pagamento input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--borda-forte);
+    border-radius: 50%;
+    flex: none;
+    cursor: pointer;
+}
+
+.pagamento input:checked {
+    border-color: var(--preto);
+    border-width: 5px;
+}
+
+/* barra de navegacao de baixo */
+.barra {
+    flex: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #fff;
+    border-top: 1px solid var(--borda);
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -6px 24px rgba(16, 17, 20, .1);
+    padding: 10px 4px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+.barra a {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 6px;
+    padding: 4px 0;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--cinza);
+}
+
+.barra a.ativo {
+    color: var(--preto);
+}
+
+/* so aparecem quando a tela vira site de computador */
+.marca,
+.so-desktop {
+    display: none;
+}
+
+/* Celulares bem estreitos, tipo iPhone SE */
+@media (max-width: 359px) {
+    .conteudo,
+    .boas-vindas {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .info-valor {
+        font-size: 11px;
+    }
+
+    .agendamento-acoes {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-claro {
+        font-size: 9px;
+    }
+}
+
+/* Celular grande e tablet: o conteudo para de esticar */
+@media (min-width: 480px) {
+    body {
+        background: #ececed;
+    }
+
+    .app {
+        max-width: 440px;
+        margin: 0 auto;
+        border-left: 1px solid var(--borda);
+        border-right: 1px solid var(--borda);
+    }
+}
+
+/* Computador: deixa de ser aplicativo e vira um site comum.
+   O menu sobe para o topo, a pagina rola inteira e o conteudo
+   se espalha em colunas. */
+@media (min-width: 900px) {
+    body {
+        background: #f7f7f8;
+    }
+
+    .app {
+        width: 100%;
+        max-width: none;
+        height: auto;
+        min-height: 100vh;
+        border: 0;
+        background: transparent;
+    }
+
+    /* a rolagem volta a ser da pagina, nao de uma caixa interna */
+    .tela {
+        overflow: visible;
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 32px 56px;
+    }
+
+    /* order: -1 joga a barra para o comeco da coluna flex */
+    .barra {
+        order: -1;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        height: 66px;
+        padding: 0 32px;
+        border-top: 0;
+        border-bottom: 1px solid var(--borda);
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .so-desktop {
+        display: flex;
+    }
+
+    .marca {
+        display: block;
+        margin-right: auto;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+    }
+
+    .barra a {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding: 0;
+        font-size: 11px;
+    }
+
+    .barra a.ativo {
+        text-decoration: underline;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
+    }
+
+    /* titulo da pagina alinhado a esquerda, como em site */
+    .topo {
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        height: auto;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 36px 32px 20px;
+    }
+
+    .topo > span:last-child {
+        display: none;
+    }
+
+    .voltar {
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border: 1px solid var(--borda);
+        border-radius: 50%;
+    }
+
+    .titulo-topo {
+        text-align: left;
+        font-size: 28px;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    /* busca: os tres campos e o botao ficam lado a lado */
+    .tela > .boas-vindas {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr) auto;
+        align-items: end;
+        gap: 14px;
+        margin-top: 36px;
+        padding: 28px 32px 30px;
+        background: #fff;
+        border: 1px solid var(--borda);
+        border-radius: var(--raio-g);
+    }
+
+    .ola,
+    .nome-usuario {
+        grid-column: 1 / -1;
+    }
+
+    .nome-usuario {
+        font-size: 26px;
+        margin: 4px 0 8px;
+    }
+
+    .campo + .campo {
+        margin-top: 0;
+    }
+
+    .boas-vindas .btn {
+        width: auto;
+        margin-top: 0;
+        padding: 0 36px;
+    }
+
+    .tela > .conteudo {
+        padding: 36px 0 0;
+    }
+
+    /* listas viram grade em vez de pilha */
+    .espaco > * + * {
+        margin-top: 0;
+    }
+
+    .subtitulo + .espaco,
+    .lista-voos,
+    .painel .espaco {
+        display: grid;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .subtitulo + .espaco,
+    .painel .espaco {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lista-voos {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .vazio {
+        grid-column: 1 / -1;
+        padding: 30px 24px;
+    }
+
+    .subtitulo {
+        font-size: 20px;
+    }
+
+    .resumo-busca {
+        padding: 18px 22px;
+    }
+
+    /* abas deixam de ocupar a largura toda */
+    .abas {
+        max-width: 380px;
+        margin-top: 6px;
+        background: #fff;
+        border: 1px solid var(--borda);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* confirmacao e pagamento em duas colunas */
+    .layout-duplo {
+        display: grid;
+        grid-template-columns: 1.15fr .85fr;
+        align-items: start;
+        gap: 36px;
+    }
+
+    .coluna-a {
+        order: 1;
+    }
+
+    .coluna-b {
+        order: 2;
+        position: sticky;
+        top: 96px;
+    }
+
+    .painel-lateral {
+        padding: 22px;
+        background: #fff;
+        border: 1px solid var(--borda);
+        border-radius: var(--raio-g);
+    }
+
+    .painel-lateral .custos {
+        margin-top: 0;
+    }
+
+    .rotulo-secao {
+        margin-top: 0;
+    }
+}
+
+/* Celular deitado: sobra pouca altura, entao encolhe o topo */
+@media (max-width: 899px) and (max-height: 480px) and (orientation: landscape) {
+    .topo {
+        height: 48px;
+    }
+
+    .foto {
+        aspect-ratio: 21 / 9;
+    }
+}
