@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="style.css">
+    <title>Aviator | Pagamento</title>
+</head>
+<body>
+
+<div class="app">
+
+    <header class="topo">
+        <a class="voltar" href="confirmar.html">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><path d="M15 18 9 12l6-6"/></svg>
+        </a>
+        <h1 class="titulo-topo">Pagamento</h1>
+        <span></span>
+    </header>
+
+    <main class="tela conteudo layout-duplo">
+
+      <div class="coluna-b">
+
+        <section class="cartao cartao-largo reserva">
+            <div class="reserva-topo">
+                <div>
+                    <p class="legenda">Resumo da Reserva</p>
+                    <p class="reserva-rota">
+                        POA
+                        <svg class="icone icone-cheio" viewBox="0 0 24 24"><path transform="rotate(90 12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                        CWB
+                    </p>
+                    <p class="reserva-data">15 Out 2023 &middot; 14:30</p>
+                </div>
+                <span class="etiqueta">Executivo</span>
+            </div>
+
+            <hr class="linha">
+
+            <div class="reserva-total">
+                <span class="mini">Total a pagar</span>
+                <span class="reserva-valor">R$29.900,90</span>
+            </div>
+        </section>
+
+      </div>
+
+      <div class="coluna-a">
+
+        <p class="legenda rotulo-secao">Método de Pagamento</p>
+
+        <section class="cartao cartao-largo">
+            <div class="linha-form">
+                <label class="rotulo" for="titular">Nome do titular</label>
+                <input class="entrada" id="titular" type="text" placeholder="Nome do Titular">
+            </div>
+
+            <div class="linha-form">
+                <label class="rotulo" for="numero">Número do Cartão</label>
+                <input class="entrada" id="numero" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000">
+            </div>
+
+            <div class="linha-form duas-colunas">
+                <div>
+                    <label class="rotulo" for="validade">Validade</label>
+                    <input class="entrada" id="validade" type="text" inputmode="numeric" placeholder="00/00">
+                </div>
+                <div>
+                    <label class="rotulo" for="cvv">CVV</label>
+                    <input class="entrada" id="cvv" type="text" inputmode="numeric" placeholder="000">
+                </div>
+            </div>
+
+            <div class="pagamentos">
+                <label class="pagamento">
+                    <span class="pagamento-icone pagamento-btc">&#8383;</span>
+                    <span class="pagamento-nome">Bitcoin / Criptomoeda</span>
+                    <input type="radio" name="metodo">
+                </label>
+
+                <label class="pagamento">
+                    <span class="pagamento-icone">
+                        <svg class="icone icone-g icone-cheio" viewBox="0 0 24 24">
+                            <path d="M12 2.4 15.6 6 12 9.6 8.4 6z"/>
+                            <path d="M12 14.4 15.6 18 12 21.6 8.4 18z"/>
+                            <path d="M6 8.4 9.6 12 6 15.6 2.4 12z"/>
+                            <path d="M18 8.4 21.6 12 18 15.6 14.4 12z"/>
+                        </svg>
+                    </span>
+                    <span class="pagamento-nome">PIX</span>
+                    <input type="radio" name="metodo" checked>
+                </label>
+
+                <label class="pagamento">
+                    <span class="pagamento-icone">
+                        <svg class="icone icone-g" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M2.5 15h3.2l3.4 2.2h3.9l5.3-3.4a1.7 1.7 0 0 0-1.9-2.8l-3.6 2.3"/><path d="M2.5 13.5v7"/></svg>
+                    </span>
+                    <span class="pagamento-nome">Dinheiro</span>
+                    <input type="radio" name="metodo">
+                </label>
+            </div>
+        </section>
+
+        <a class="btn btn-normal btn-final" href="agendamentos.html">Confirmar Pagamento</a>
+
+      </div>
+
+    </main>
+
+    <nav class="barra so-desktop">
+        <span class="marca">Aviator</span>
+        <a href="index.html" class="ativo">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.2-4.2"/></svg>
+            <span>Pesquisa</span>
+        </a>
+        <a href="agendamentos.html">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg>
+            <span>Agenda</span>
+        </a>
+        <a href="#">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3.5 20.5l1.4-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+            <span>Suporte</span>
+        </a>
+        <a href="#">
+            <svg class="icone icone-g" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+
+</body>
+</html>
